@@ -1,0 +1,3 @@
+en la terminal FRONT: npm run dev
+
+en la terminal BACK: npm start
