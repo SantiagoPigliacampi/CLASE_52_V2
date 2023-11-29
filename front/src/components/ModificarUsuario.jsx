@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { updateUser } from './ApiMethods';
 import { Button, Form } from 'react-bootstrap';
 
 
-function ModificarUsuario() {
+
+function ModificarUsuario(props) {
+  
+
   const [user, setUser] = useState({
-    id: '',
-    name: '',
-    age: '',
-    email: '',
-    is_premium: false,
-    birthdate: '',
+    id_user: props.usuarioModificar.id_user ?? '',
+    name: props.usuarioModificar.name ?? '',
+    age: props.usuarioModificar.age ?? '',
+    email: props.usuarioModificar.email ?? '',
+    is_premium: props.usuarioModificar.is_premium ?? '',
+    birthdate: props.usuarioModificar.birthdate ? props.usuarioModificar.birthdate.substring(0,10) :'',
   });
 
   //la función handleInputChange  me va guardando los valores de cada input cuando se modifican
@@ -34,17 +37,22 @@ function ModificarUsuario() {
     e.preventDefault();
 
     try {
-        console.log('Usuario Edad:', user.age);
-      const _updateUser = await updateUser(user.id, user);
+        /* console.log('Usuario Edad:', user.age); */
+      const _updateUser = await updateUser(user.id_user, user);
       console.log('Usuario Modificado:', _updateUser);
     } catch (error) {
       console.error('Error al crear el usuario:', error);
     }
   };
 
+  useEffect(() => {
+    
+    console.log('props', props);
+  }, [props]);
+
   return (
     <Form onSubmit={handleSubmit}>
-        <Form.Group className="mb-3" controlId="formID">
+       {/*  <Form.Group className="mb-3" controlId="formID">
         <Form.Label>ID Usuario:</Form.Label>
         <Form.Control
           type="number"
@@ -53,7 +61,7 @@ function ModificarUsuario() {
           onChange={handleInputChange}
           placeholder="Ingrese ID Usuario ha modificar"
         />
-      </Form.Group>
+      </Form.Group> */}
 
       <Form.Group className="mb-3" controlId="formName">
         <Form.Label>Nombre:</Form.Label>
